@@ -1,21 +1,12 @@
-import {
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { ChangeEventHandler, useState } from 'react';
 
 const useInput = (initValue = '') => {
   const [value, setValue] = useState(initValue);
-  const onChange = useCallback<ChangeEventHandler<HTMLInputElement>>((e) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setValue(e.target.value);
-  }, []);
-  const copied = useMemo(() => value, []);
-  useEffect(() => {
-    console.log('value: ', value, 'copied: ', copied);
-  });
-  return { value, onChange };
+  };
+  const reset = (resetValue = '') => setValue(resetValue);
+  return { value, onChange, reset };
 };
 
 export default useInput;
