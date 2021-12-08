@@ -44,14 +44,17 @@ export const ListItem: VFC<ListItemProps> = ({ children }) => {
 };
 
 // common
-export type ButtonProps = {
+export type IconButtonProps = {
   onClick: MouseEventHandler;
   children: ReactNode;
 };
 
-export const Button: VFC<ButtonProps> = ({ onClick, children }) => {
+export const IconButton: VFC<IconButtonProps> = ({ onClick, children }) => {
   return (
-    <button className="px-1 py-0.5 border-2 rounded" onClick={onClick}>
+    <button
+      className="p-1 rounded text-gray-800 hover:bg-gray-100"
+      // onClick={onClick}
+    >
       {children}
     </button>
   );

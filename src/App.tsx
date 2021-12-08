@@ -4,9 +4,10 @@ import React, {
   MouseEventHandler,
   VFC,
 } from 'react';
-import { Button, ListGroup, ListItem, TextInput } from './components';
+import { IconButton, ListGroup, ListItem, TextInput } from './components';
 import { Todo, useApp } from './hooks/app';
 
+// depend on todo
 type TodoCreateFormProps = {
   titleInput: {
     value: string;
@@ -23,6 +24,7 @@ const TodoCreateForm: VFC<TodoCreateFormProps> = ({ titleInput, onSubmit }) => {
   );
 };
 
+// depend on todo
 type TodoItemProps = {
   todo: Todo;
   onClickRemove: MouseEventHandler;
@@ -30,15 +32,23 @@ type TodoItemProps = {
 
 const TodoItem: VFC<TodoItemProps> = ({ todo, onClickRemove }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center space-x-2">
       <div>{todo.title}</div>
-      <Button onClick={onClickRemove}>
-        <div className="text-gray-500">Remove</div>
-      </Button>
+      <IconButton onClick={onClickRemove}>
+        <svg
+          className="h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+        </svg>
+      </IconButton>
     </div>
   );
 };
 
+// app
 const App: VFC = function () {
   const { todos, todoCreateForm, addTodo, removeTodo } = useApp();
 

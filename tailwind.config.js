@@ -9,5 +9,6 @@ module.exports = {
       borderWidth: ['last'],
     },
   },
+  plugins: [],
   // plugins: [require('daisyui')],
 };
