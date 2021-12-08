@@ -1,8 +1,8 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react';
+import { useState, ChangeEventHandler } from 'react';
 import { useLocalStorage } from 'react-use';
 import { v4 as uuidv4 } from 'uuid';
 
-// common
+// ui state
 export const useTextInput = (initValue = '') => {
   const [value, setValue] = useState(initValue);
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -12,8 +12,8 @@ export const useTextInput = (initValue = '') => {
   return { value, onChange, reset };
 };
 
-// form state
-export const useTodoCreateFormState = () => {
+// ui state
+export const useTodoCreateForm = () => {
   const titleInput = useTextInput();
   const reset = () => {
     titleInput.reset();
@@ -25,12 +25,12 @@ export const useTodoCreateFormState = () => {
 };
 
 // repository
-type TodoData = {
+export type TodoData = {
   title: string;
   completed: boolean;
 };
 
-type Todo = {
+export type Todo = {
   id: string;
   title: string;
   completed: boolean;
@@ -63,27 +63,31 @@ export const useTodoRepository = () => {
   };
 };
 
-// app page
-export const useAppPage = () => {
-  const todoCreateFormState = useTodoCreateFormState();
+// app
+export const useApp = () => {
+  const todoCreateForm = useTodoCreateForm();
   const todoRepository = useTodoRepository();
 
   // usecase
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
+  const addTodo = () => {
     todoRepository.createTodo({
       newData: {
-        title: todoCreateFormState.titleInput.value,
+        title: todoCreateForm.titleInput.value,
         completed: false,
       },
     });
-    todoCreateFormState.reset();
+    todoCreateForm.reset();
+  };
+
+  const removeTodo = (id: string) => {
+    // if (!window.confirm('削除します。よろしいですか？')) return;
+    todoRepository.deleteTodo({ id });
   };
 
   return {
     todos: todoRepository.todos,
-    todoCreateFormState,
-    onSubmit,
-    onRemove: todoRepository.deleteTodo,
+    todoCreateForm,
+    addTodo,
+    removeTodo,
   };
 };

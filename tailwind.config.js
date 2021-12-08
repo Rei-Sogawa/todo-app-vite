@@ -5,7 +5,9 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      borderWidth: ['last'],
+    },
   },
-  plugins: [require("daisyui")],
-}
+  // plugins: [require('daisyui')],
+};
